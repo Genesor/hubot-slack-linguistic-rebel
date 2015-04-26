@@ -1,13 +1,14 @@
 # Description:
 #   @TODO
 
-LanguageDetect = require 'languagedetect'
-lngDetector = new LanguageDetect()
+translator = require('yandex-translate-api')(process.env.HUBOT_YANDEX_API_KEY)
 
 module.exports = (robot) ->
   robot.hear /(.* )?/i, (res) ->
-    console.log res.message.text
-    language = lngDetector.detect(res.message.text, 3).shift()
-    console.log language
-    res.send 'I don\'t know what to say'
-
+    msg       = res.message
+    textMsg   = msg.text.replace(/\:[a-zA-Z\_]+\:/g, '')
+    
+    translator.detect textMsg, (err, detect) ->
+      detect.lang == 'fr'
+      translator.translate textMsg, {to: 'en', from: res.lang}, (err, trans) ->
+        res.send '@'+msg.user.id+": "+trans.text
