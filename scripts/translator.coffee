@@ -9,6 +9,6 @@ module.exports = (robot) ->
     textMsg   = msg.text.replace(/\:[a-zA-Z\_]+\:/g, '')
     
     translator.detect textMsg, (err, detect) ->
-      detect.lang == 'fr'
-      translator.translate textMsg, {to: 'en', from: res.lang}, (err, trans) ->
-        res.send '@'+msg.user.id+": "+trans.text
+      if detect.lang == 'fr'
+        translator.translate textMsg, {to: 'en', from: res.lang}, (err, trans) ->
+          res.send '@'+msg.user.id+": "+trans.text
