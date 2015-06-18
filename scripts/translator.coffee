@@ -7,7 +7,6 @@ module.exports = (robot) ->
   robot.hear /(.* )?/i, (res) ->
     msg       = res.message
     textMsg   = msg.text.replace(/\:[a-zA-Z\_]+\:/g, '')
-    
     translator.detect textMsg, (err, detect) ->
       if detect.lang == 'fr'
         translator.translate textMsg, {to: 'en', from: res.lang}, (err, trans) ->
