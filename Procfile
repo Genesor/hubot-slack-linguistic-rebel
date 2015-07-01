@@ -1,1 +1,1 @@
-web: bin/hubot --name baguette --adapter slack-xmpp-api
+web: bin/hubot --name ben.junior --adapter slack-xmpp-api
